@@ -1,0 +1,30 @@
+.overlay,
+.overlayBtn {
+  display: none;
+}
+
+.galleryItem:hover .overlay {
+  display: block;
+}
+.galleryItem:hover .overlayBtn {
+  display: flex;
+  position: absolute;
+  bottom: 0%;
+  width: 100%;
+  padding: 7%;
+}
+
+.galleryItem:hover {
+  scale: 110%;
+}
+
+.galleryItem:hover img,
+div {
+  border-radius: calc(var(--radius) /* 0.25rem = 4px */ + 4px);
+}
+
+@media (max-width: 1100px) {
+  .galleryItem:hover .overlayBtn {
+    padding: 4%;
+  }
+}
