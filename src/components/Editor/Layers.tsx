@@ -4,7 +4,7 @@ import type { ImageEditorProps } from ".";
 import { Label } from "../ui/label";
 
 const Layers = (props: ImageEditorProps) => {
-  const { selectedLayer, setSelectedLayer, addText } = useEditorStore();
+  const { selectedLayer, setSelectedLayer, addText, canvasOption } = useEditorStore();
   return (
     <div className="flex-1/5 flex flex-col gap-3 border-r min-h-screen no-rounded pr-2">
       <div className="flex flex-col">
@@ -39,8 +39,8 @@ const Layers = (props: ImageEditorProps) => {
       >
         <div className="">
           <div
-            className="w-5 h-5 square-color"
-            style={{ backgroundColor: "teal" }}
+            className="w-5 h-5 square-rounded"
+            style={{ backgroundColor: canvasOption.backgroundColor }}
           />
         </div>
         <Label className="cursor-pointer">Canvas</Label>
