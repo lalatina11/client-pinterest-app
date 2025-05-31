@@ -1,5 +1,4 @@
-import { apiRequest } from "@/lib";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { ThemeProvider } from "./components/ThemeProvider.tsx";
 import ToasterProvider from "./components/ToasterProvider.tsx";
@@ -15,19 +14,24 @@ import SearchPage from "./pages/SearchPage.tsx";
 import { useAuthStore } from "./utils/zustandStores.ts";
 
 const App = () => {
-  const { setCurrentUser } = useAuthStore();
-  useQuery({
-    queryKey: ["user"],
-    queryFn: async () => {
-      try {
-        const res = await apiRequest("/api/users/current-user");
-        setCurrentUser(res.data.user);
-        return res.data.user;
-      } catch (error) {
-        return (error as Error).message;
-      }
-    },
-  });
+  const { setCurrentUser, removeCurrentUser } = useAuthStore();
+  const fetchUserIsLoggedIn = async () => {
+    const res = await fetch(
+      `${
+        import.meta.env.VITE_API_KEY || "http://localhost:3030"
+      }/api/users/current-user`,
+      { credentials: "include" }
+    );
+    if (!res.ok) {
+      return removeCurrentUser();
+    }
+    const data = await res.json();
+    setCurrentUser(data.user);
+  };
+  useEffect(() => {
+    fetchUserIsLoggedIn();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <BrowserRouter>
       <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
