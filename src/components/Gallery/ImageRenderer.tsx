@@ -20,7 +20,7 @@ const ImageRenderer = (props: Props) => {
         "w-full h-auto object-cover shadow shadow-zinc-500 rounded hover:rounded-xl"
       }
       loading="lazy"
-      transformation={[{ width: width ?? 372, height: height ?? undefined }]}
+      transformation={[{ width: width ?? 375, height: height ?? undefined }]}
       alt="Failed to get the image"
       lqip={{ active: true, quality: 20 }}
     />

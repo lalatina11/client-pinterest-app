@@ -31,7 +31,7 @@ type TextOption = {
     left: number;
 }
 
-interface CanvasOption {
+export interface CanvasOption {
     height: number;
     orientation: string;
     size: string;
