@@ -169,7 +169,7 @@ const CreatePage = () => {
                 <div className="space-y-3">
                   <Label htmlFor="board">Board</Label>
                   <Select>
-                    <SelectTrigger id="board">
+                    <SelectTrigger className="ring-1 ring-zinc-500" id="board">
                       <SelectValue placeholder="Board" id="board" />
                     </SelectTrigger>
                     <SelectContent>
