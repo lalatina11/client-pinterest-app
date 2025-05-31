@@ -3,11 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
-button {
+button,
+btn {
   cursor: pointer;
 }
 
-input {
+input, textarea {
   @apply ring ring-zinc-500;
 }
 
@@ -15,16 +16,27 @@ input[type="checkbox"] {
   @apply ring ring-transparent;
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .Card {
   @apply bg-zinc-200/50 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 shadow-md border border-zinc-500;
 }
 
-.square-color{
-  @apply rounded
+.square-color {
+  @apply rounded;
 }
 
-.no-rounded{
-  @apply rounded-none
+
+.no-rounded {
+  @apply rounded-none;
 }
 
 @theme inline {
