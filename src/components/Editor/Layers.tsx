@@ -1,10 +1,10 @@
+import { useEditorStore } from "@/utils/zustandStores";
 import { TypeOutline } from "lucide-react";
 import type { ImageEditorProps } from ".";
-import { useState } from "react";
 import { Label } from "../ui/label";
 
 const Layers = (props: ImageEditorProps) => {
-  const [layer, setLayer] = useState<"text" | "canvas" | "">("");
+  const { selectedLayer, setSelectedLayer, addText } = useEditorStore();
   return (
     <div className="flex-1/5 flex flex-col gap-3 border-r min-h-screen no-rounded pr-2">
       <div className="flex flex-col">
@@ -13,31 +13,28 @@ const Layers = (props: ImageEditorProps) => {
       </div>
       <div
         onClick={() => {
-          if (layer === "text") {
-            setLayer("");
-          } else {
-            setLayer("text");
+          if (selectedLayer === "canvas") {
+            setSelectedLayer("text");
           }
+          addText();
         }}
         className={`flex gap-4 items-center w-full cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800 p-3 transition-all ease-in-out duration-300 ${
-          layer === "text" ? "bg-zinc-200 dark:bg-zinc-800" : ""
+          selectedLayer === "text" ? "bg-zinc-200 dark:bg-zinc-800" : ""
         }`}
       >
         <div>
           <TypeOutline />
         </div>
-        <Label>Tambahkan Teks</Label>
+        <Label className="cursor-pointer">Tambahkan Teks</Label>
       </div>
       <div
         onClick={() => {
-          if (layer === "canvas") {
-            setLayer("");
-          } else {
-            setLayer("canvas");
+          if (selectedLayer === "text") {
+            setSelectedLayer("canvas");
           }
         }}
         className={`flex gap-4 items-center w-full cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800 p-3 transition-all ease-in-out duration-300 ${
-          layer === "canvas" ? "bg-zinc-200 dark:bg-zinc-800" : ""
+          selectedLayer === "canvas" ? "bg-zinc-200 dark:bg-zinc-800" : ""
         }`}
       >
         <div className="">
@@ -46,7 +43,7 @@ const Layers = (props: ImageEditorProps) => {
             style={{ backgroundColor: "teal" }}
           />
         </div>
-        <Label>Canvas</Label>
+        <Label className="cursor-pointer">Canvas</Label>
       </div>
     </div>
   );
