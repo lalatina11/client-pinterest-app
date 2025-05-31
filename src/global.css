@@ -30,7 +30,7 @@ input[type="number"] {
   @apply bg-zinc-200/50 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 shadow-md border border-zinc-500;
 }
 
-.square-color {
+.square-rounded {
   @apply rounded;
 }
 
