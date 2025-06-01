@@ -13,7 +13,7 @@ export interface ImageEditorProps {
 const Editor = (props: ImageEditorProps) => {
   return (
     <div className="flex gap-4">
-      <Layers previewImage={props.previewImage} />
+      <Layers />
       <WorkSpace previewImage={props.previewImage} />
       <Options previewImage={props.previewImage} />
     </div>

@@ -1,9 +1,8 @@
 import { useEditorStore } from "@/utils/zustandStores";
 import { TypeOutline } from "lucide-react";
-import type { ImageEditorProps } from ".";
 import { Label } from "../ui/label";
 
-const Layers = (props: ImageEditorProps) => {
+const Layers = () => {
   const { selectedLayer, setSelectedLayer, addText, canvasOption } = useEditorStore();
   return (
     <div className="flex-1/5 flex flex-col gap-3 border-r min-h-screen no-rounded pr-2">
