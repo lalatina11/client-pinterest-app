@@ -1,12 +1,17 @@
 import { useEditorStore } from "@/utils/zustandStores";
 import type { ImageEditorProps } from ".";
 import { Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef, useState, type MouseEventHandler } from "react";
 
 const WorkSpace = (props: ImageEditorProps) => {
   const { previewImage } = props;
-  const { textOption, setTextOption, canvasOption, setCanvasOption } =
-    useEditorStore();
+  const {
+    setSelectedLayer,
+    textOption,
+    setTextOption,
+    canvasOption,
+    setCanvasOption,
+  } = useEditorStore();
 
   useEffect(() => {
     if (canvasOption.height === 0) {
@@ -19,11 +24,47 @@ const WorkSpace = (props: ImageEditorProps) => {
     }
   }, [previewImage, canvasOption, setCanvasOption, previewImage.url]);
 
+  const itemRef = useRef(null);
+  const containerRef = useRef(null);
+  const offset = useRef({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
+    if (dragging) {
+      setTextOption({
+        ...textOption,
+        left: e.clientX - offset.current.x,
+        top: e.clientY - offset.current.y,
+      });
+    }
+  };
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
+  const handleMouseLeave = () => {
+    setDragging(false);
+    console.log("Mouse Leave");
+  };
+  const handleMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
+    setSelectedLayer("text");
+    setDragging(true);
+    offset.current = {
+      x: e.clientX - textOption.left,
+      y: e.clientY - textOption.top,
+    };
+  };
+
   return (
     <div className="flex-3/5 flex justify-center items-center bg-zinc-200/50 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 py-16">
       <div
         className="w-[375px] relative overflow-hidden no-rounded flex justify-center items-center"
-        style={{ height: canvasOption.height, backgroundColor:canvasOption.backgroundColor }}
+        style={{
+          height: canvasOption.height,
+          backgroundColor: canvasOption.backgroundColor,
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        ref={containerRef}
       >
         <img
           src={previewImage.url}
@@ -40,11 +81,14 @@ const WorkSpace = (props: ImageEditorProps) => {
               top: textOption.top,
               fontSize: `${textOption.fontSize}px`,
             }}
+            onMouseDown={handleMouseDown}
+            ref={itemRef}
           >
             <input
-              className={`p-1 px-2 rounded`}
+              className={`p-1 px-2 rounded w-full`}
               style={{
                 color: textOption.color,
+                cursor: dragging ? "grabbing" : "grab",
               }}
               type="text"
               defaultValue={textOption.text}
